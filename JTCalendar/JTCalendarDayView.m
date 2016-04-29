@@ -59,10 +59,16 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
 {
     isSelected = NO;
     self.isOtherMonth = NO;
-
+    
     {
         backgroundView = [UIView new];
         [self addSubview:backgroundView];
+    }
+    
+    {
+        dotView = [JTCircleView new];
+        [self addSubview:dotView];
+        dotView.hidden = YES;
     }
     
     {
@@ -76,14 +82,8 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
     }
     
     {
-        dotView = [JTCircleView new];
-        [self addSubview:dotView];
-        dotView.hidden = YES;
-    }
-    
-    {
         UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouch)];
-
+        
         self.userInteractionEnabled = YES;
         [self addGestureRecognizer:gesture];
     }
@@ -105,8 +105,8 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
 {
     textLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     backgroundView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-
-
+    
+    
     CGFloat sizeCircle = MIN(self.frame.size.width, self.frame.size.height);
     CGFloat sizeDot = sizeCircle;
     
@@ -121,7 +121,7 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
     circleView.layer.cornerRadius = sizeCircle / 2.;
     
     dotView.frame = CGRectMake(0, 0, sizeDot, sizeDot);
-    dotView.center = CGPointMake(self.frame.size.width / 2., (self.frame.size.height / 2.) +sizeDot * 2.5);
+    dotView.center = CGPointMake(self.frame.size.width / 2., (self.frame.size.height / 2.));
     dotView.layer.cornerRadius = sizeDot / 2.;
 }
 
@@ -163,7 +163,7 @@ static NSString *const kJTCalendarDaySelected = @"kJTCalendarDaySelected";
     
     NSInteger currentMonthIndex = [self monthIndexForDate:self.date];
     NSInteger calendarMonthIndex = [self monthIndexForDate:self.calendarManager.currentDate];
-        
+    
     currentMonthIndex = currentMonthIndex % 12;
     
     if(currentMonthIndex == (calendarMonthIndex + 1) % 12){
